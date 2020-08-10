@@ -16,15 +16,6 @@ class CreateChampionsTable extends Migration
         Schema::create('champions', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('role')->nullable();
-            $table->unsignedInteger('burst');
-            $table->unsignedInteger('poke');
-            $table->unsignedInteger('basic');
-            $table->unsignedInteger('tank');
-            $table->unsignedInteger('sustain');
-            $table->unsignedInteger('utility');
-            $table->unsignedInteger('mobility');
-            $table->unsignedInteger('difficulty');
 //            $table->string('version');
             $table->timestamps();
         });
