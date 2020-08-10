@@ -21,7 +21,7 @@ own = data['own']
 
 options = Options()
 options.headless = True
-options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--example-flag')
 # options.add_argument("--example-flag")
 
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
