@@ -267,7 +267,7 @@
             }
             var formData = new FormData(document.querySelector('form'));
             $('#title').html("Simulating");
-
+            $(this).prop("disabled",true);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': "{{csrf_token()}}"
@@ -288,6 +288,8 @@
                 }
                 $('#result').html(data['result']);
                 $('#resultDiv').removeClass('collapse');
+                $(this).prop("disabled",false);
+
 
             }).error(function (data) {
                 $('#resultDiv').removeClass('alert-success');
@@ -298,6 +300,8 @@
                 $('#title').html("MLS - Sandbox Arena");
                 $('#result').html(data['responseText']);
                 $('#resultDiv').removeClass('collapse');
+                $(this).prop("disabled",false);
+
 
             });
         });

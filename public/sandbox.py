@@ -44,7 +44,9 @@ while err and limit > 0:
 
 try:
     if limit <= 0:
-        driver = webdriver.Chrome(options=options)
+        opt = Options()
+        opt.headless = True
+        driver = webdriver.Chrome(options=opt)
     driver.get("https://live-draft.herokuapp.com/")
     selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
     key = ""
