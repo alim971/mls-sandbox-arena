@@ -24,12 +24,12 @@ options.headless = True
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument("--example-flag")
-opts.add_argument('--disable-dev-shm-usage')
+# opts.add_argument('--disable-dev-shm-usage')
 
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
 # driver = webdriver.Chrome(executable_path=driverLocation,options=options)
 driver = webdriver.Chrome(options=options)
-options.add_argument('--example-flag')
+# options.add_argument('--example-flag')
 
 # driver = webdriver.Chrome()
 driver.get("https://live-draft.herokuapp.com/")
@@ -71,6 +71,6 @@ try:
     infoSub = driver.find_element_by_id('match-info-text-sub').text
     print(infoText + " " + infoSub)
 finally:
-    print('Error while simulating match')
+    print >> sys.stderr, "Error while simulating match"
     driver.quit()
-#
+
