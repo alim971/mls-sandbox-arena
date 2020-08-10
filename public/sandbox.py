@@ -33,7 +33,7 @@ options.add_argument('--example-flag')
 # driver = webdriver.Chrome()
 driver.get("https://live-draft.herokuapp.com/")
 print("win")
-return
+# return
 # selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
 # key = ""
 # if own:
