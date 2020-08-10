@@ -288,7 +288,7 @@
                 }
                 $('#result').html(data['result']);
                 $('#resultDiv').removeClass('collapse');
-                $(this).prop("disabled",false);
+                $('#submit').prop("disabled",false);
 
 
             }).error(function (data) {
@@ -300,7 +300,7 @@
                 $('#title').html("MLS - Sandbox Arena");
                 $('#result').html(data['responseText']);
                 $('#resultDiv').removeClass('collapse');
-                $(this).prop("disabled",false);
+                $('#submit').prop("disabled",false);
 
 
             });
