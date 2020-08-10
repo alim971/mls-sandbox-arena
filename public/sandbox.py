@@ -71,6 +71,5 @@ try:
     infoSub = driver.find_element_by_id('match-info-text-sub').text
     print(infoText + " " + infoSub)
 finally:
-    print >> sys.stderr, "Error while simulating match"
     driver.quit()
 
