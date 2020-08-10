@@ -21,8 +21,9 @@ own = data['own']
 
 options = Options()
 options.headless = True
-driverLocation = '/usr/local/bin/chromedriver' #if windows
-driver = webdriver.Chrome(executable_path=driverLocation,options=options)
+# driverLocation = '/usr/local/bin/chromedriver' #if windows
+# driver = webdriver.Chrome(executable_path=driverLocation,options=options)
+driver = webdriver.Chrome(options=options)
 
 # driver = webdriver.Chrome()
 driver.get("https://live-draft.herokuapp.com/")
