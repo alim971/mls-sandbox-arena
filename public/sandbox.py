@@ -66,3 +66,5 @@ while not 'wins' in info.text:
 infoText = info.text
 infoSub = driver.find_element_by_id('match-info-text-sub').text
 print(infoText + " " + infoSub)
+driver.close()
+
