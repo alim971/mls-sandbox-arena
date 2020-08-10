@@ -70,10 +70,9 @@ try:
     infoText = info.text
     infoSub = driver.find_element_by_id('match-info-text-sub').text
     print(infoText + " " + infoSub)
-    except Exception as e:
-        tb = traceback.format_exc()
-        print >> sys.stderr, tb
-
+# except Exception as e:
+#      tb = traceback.format_exc()
+#      print >> sys.stderr, tb
 finally:
     driver.quit()
 
