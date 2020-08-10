@@ -13,7 +13,7 @@ from selenium.webdriver.chrome.options import Options
 # x = '{"own":false,"0-1":"Amumu","0-1_rune":"AS","0-2":"Amumu","0-2_rune":"AS","0-3":"Amumu","0-3_rune":"AS",' \
 #     '"0-4":"Amumu","0-4_rune":"AS","0-5":"Amumu","0-5_rune":"AS","1-1":"Amumu","1-1_rune":"AS","1-2":"Amumu",' \
 #     '"1-2_rune":"AS","1-3":"Amumu","1-3_rune":"AS","1-4":"Amumu","1-4_rune":"AS","1-5":"Amumu","1-5_rune":"AS"} '
-GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google-chrome'
 CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 x = sys.argv[1]
 data = json.loads(x)
