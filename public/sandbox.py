@@ -72,5 +72,5 @@ try:
     infoSub = driver.find_element_by_id('match-info-text-sub').text
     print(infoText + " " + infoSub)
 finally:
-     driver.quit()
+     driver.close()
 
