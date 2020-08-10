@@ -33,8 +33,16 @@ options.binary_location = GOOGLE_CHROME_PATH
 # options.add_argument('--example-flag')
 
 # driver = webdriver.Chrome()
+limit = 5
+err = True
+while err and limit > 0:
+    try:
+        driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
+        err = False
+    except Exception:
+        limit -= 1
+
 try:
-    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
     driver.get("https://live-draft.herokuapp.com/")
     selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
     key = ""
