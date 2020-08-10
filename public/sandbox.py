@@ -26,8 +26,8 @@ options.headless = True
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument("--example-flag")
-opts.add_argument('--disable-dev-shm-usage')
-chrome_options.binary_location = GOOGLE_CHROME_PATH
+options.add_argument('--disable-dev-shm-usage')
+options.binary_location = GOOGLE_CHROME_PATH
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
 # driver = webdriver.Chrome(executable_path=driverLocation,options=options)
 driver = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, options=options)
