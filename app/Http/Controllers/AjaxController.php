@@ -43,8 +43,8 @@ class AjaxController extends Controller
         $result = [];
         if (!$process->isSuccessful()) {
             $result += [
-//                'result' => "Error while trying to simulate",
-                'result' => $process->getErrorOutput()
+                'result' => $process->getOutput()//"Error while trying to simulate",
+//                'result' => $process->getErrorOutput()
             ];
             return Response::json($result)->setStatusCode(404);
 //            throw new ProcessFailedException($process);

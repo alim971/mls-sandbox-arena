@@ -24,6 +24,7 @@ options.headless = True
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument("--example-flag")
+opts.add_argument('--disable-dev-shm-usage')
 
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
 # driver = webdriver.Chrome(executable_path=driverLocation,options=options)
@@ -32,44 +33,44 @@ options.add_argument('--example-flag')
 
 # driver = webdriver.Chrome()
 driver.get("https://live-draft.herokuapp.com/")
-print("win")
-driver.quit()
-# return
-# selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
-# key = ""
-# if own:
-#     key = data['key']
-#     selectOwn.select_by_value('own-players')
-#     blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
-#     redKey = driver.find_element_by_id('own-players-input-sandbox-red')
-#     blueKey.send_keys(key)
-#     redKey.send_keys(key)
-# else:
-#     selectOwn.select_by_value('default-players')
-# driver.find_element_by_xpath('//button[text()="Sandbox"]').click()
-# while not len(driver.find_elements_by_id('announcement-label')) > 0:
-#     sleep(1)
-# for x in range(2):
-#     for y in range(5):
-#         name = str(x) + '-' + str(y + 1)
-#         champ = Select(driver.find_element_by_id('pick-' + name))
-#         champ.select_by_visible_text(data[name])
-#
-#         rune = Select(driver.find_element_by_id('rune-' + name))
-#         rune.select_by_value(data[name + '_rune'])
-#
-# buttonBlue = driver.find_element_by_id('confirm-button-0')
-# buttonRed = driver.find_element_by_id('confirm-button-1')
-# buttonBlue.click()
-# buttonRed.click()
-# # sleep(2)
-# info = driver.find_element_by_id('match-info-text')
-#
-#
-# while not 'wins' in info.text:
-#     sleep(1)
-# infoText = info.text
-# infoSub = driver.find_element_by_id('match-info-text-sub').text
-# print(infoText + " " + infoSub)
-# driver.close()
+try:
+    selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
+    key = ""
+    if own:
+        key = data['key']
+        selectOwn.select_by_value('own-players')
+        blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
+        redKey = driver.find_element_by_id('own-players-input-sandbox-red')
+        blueKey.send_keys(key)
+        redKey.send_keys(key)
+    else:
+        selectOwn.select_by_value('default-players')
+    driver.find_element_by_xpath('//button[text()="Sandbox"]').click()
+    while not len(driver.find_elements_by_id('announcement-label')) > 0:
+        sleep(1)
+    for x in range(2):
+        for y in range(5):
+            name = str(x) + '-' + str(y + 1)
+            champ = Select(driver.find_element_by_id('pick-' + name))
+            champ.select_by_visible_text(data[name])
+
+            rune = Select(driver.find_element_by_id('rune-' + name))
+            rune.select_by_value(data[name + '_rune'])
+
+    buttonBlue = driver.find_element_by_id('confirm-button-0')
+    buttonRed = driver.find_element_by_id('confirm-button-1')
+    buttonBlue.click()
+    buttonRed.click()
+    # sleep(2)
+    info = driver.find_element_by_id('match-info-text')
+
+
+    while not 'wins' in info.text:
+        sleep(1)
+    infoText = info.text
+    infoSub = driver.find_element_by_id('match-info-text-sub').text
+    print(infoText + " " + infoSub)
+finally:
+    print('Error while simulating match')
+    driver.quit()
 #
