@@ -37,7 +37,7 @@ class AjaxController extends Controller
         $json = json_encode($data);
         $path = public_path() . '/sandbox.py';
 //        $process = new Process("python3 {pa()} . '/sandbox.py {$json}");
-        $process = new Process(['python3',$path, $json]);
+        $process = new Process(['python',$path, $json]);
         $process->run();
 
         $result = [];
