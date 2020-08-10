@@ -21,20 +21,20 @@ own = data['own']
 
 options = Options()
 options.headless = True
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
-options.add_argument('--example-flag')
+# options.add_argument('--disable-gpu')
+# options.add_argument('--no-sandbox')
+# options.add_argument('--example-flag')
 # options.add_argument("--example-flag")
 
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
 # driver = webdriver.Chrome(executable_path=driverLocation,options=options)
-driver = webdriver.Chrome(options=options)
+# driver = webdriver.Firefox(options=options)
 
 # driver = webdriver.Chrome()
 succ = True
 while(succ):
     try:
-        driver = webdriver.Chrome(options=options)
+        driver = webdriver.Firefox(options=options)
         driver.get("https://live-draft.herokuapp.com/")
         while not len(driver.find_elements_by_id('player-select-sandbox')) > 0:
                 sleep(1)
