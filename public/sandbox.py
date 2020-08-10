@@ -20,7 +20,7 @@ own = data['own']
 
 
 options = Options()
-options.headless = True
+# options.headless = True
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
 options.add_argument('--example-flag')
