@@ -296,7 +296,7 @@
                 }
 
                 $('#title').html("MLS - Sandbox Arena");
-                $('#result').html(data['result']);
+                $('#result').html(data['responseText']);
                 $('#resultDiv').removeClass('collapse');
 
             });
