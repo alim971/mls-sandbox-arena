@@ -23,7 +23,7 @@ options = Options()
 options.headless = True
 options.add_argument('--disable-gpu')
 options.add_argument('--no-sandbox')
-# options.add_argument("--example-flag")
+options.add_argument("--example-flag")
 
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
 # driver = webdriver.Chrome(executable_path=driverLocation,options=options)
@@ -33,6 +33,7 @@ options.add_argument('--example-flag')
 # driver = webdriver.Chrome()
 driver.get("https://live-draft.herokuapp.com/")
 print("win")
+driver.quit()
 # return
 # selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
 # key = ""
