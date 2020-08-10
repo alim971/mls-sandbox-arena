@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import Select
 # datetime object containing current date and time
 from time import sleep
 
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 
 # x = '{"own":false,"0-1":"Amumu","0-1_rune":"AS","0-2":"Amumu","0-2_rune":"AS","0-3":"Amumu","0-3_rune":"AS",' \
 #     '"0-4":"Amumu","0-4_rune":"AS","0-5":"Amumu","0-5_rune":"AS","1-1":"Amumu","1-1_rune":"AS","1-2":"Amumu",' \
