@@ -47,7 +47,7 @@ try:
     if limit <= 0:
         opt = Options()
         opt.headless = True
-        opt.add_argument("--example-flag-" + str(random(100))
+        opt.add_argument("--example-flag-" + str(random(100)))
         driver = webdriver.Chrome(options=opt)
     driver.get("https://live-draft.herokuapp.com/")
     selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
