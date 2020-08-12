@@ -19,8 +19,6 @@ CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 x = sys.argv[1]
 data = json.loads(x)
 
-own = data['own']
-
 
 
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
