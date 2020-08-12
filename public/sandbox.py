@@ -16,9 +16,6 @@ from selenium.webdriver.chrome.options import Options
 x = sys.argv[1]
 data = json.loads(x)
 
-own = data['own']
-
-
 options = Options()
 options.headless = True
 driverLocation = '/usr/local/bin/chromedriver' #if windows
@@ -26,17 +23,14 @@ driver = webdriver.Chrome(executable_path=driverLocation,options=options)
 
 # driver = webdriver.Chrome()
 driver.get("https://live-draft.herokuapp.com/")
-selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
-key = ""
-if own:
-    key = data['key']
-    selectOwn.select_by_value('own-players')
-    blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
-    redKey = driver.find_element_by_id('own-players-input-sandbox-red')
-    blueKey.send_keys(key)
-    redKey.send_keys(key)
-else:
-    selectOwn.select_by_value('default-players')
+
+key = data['key']
+
+blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
+redKey = driver.find_element_by_id('own-players-input-sandbox-red')
+blueKey.send_keys(key)
+redKey.send_keys(key)
+
 driver.find_element_by_xpath('//button[text()="Sandbox"]').click()
 while not len(driver.find_elements_by_id('announcement-label')) > 0:
     sleep(1)
@@ -48,6 +42,9 @@ for x in range(2):
 
         rune = Select(driver.find_element_by_id('rune-' + name))
         rune.select_by_value(data[name + '_rune'])
+
+        item = Select(driver.find_element_by_id('item-' + name))
+        item.select_by_value(data[name + '_item'])
 
 buttonBlue = driver.find_element_by_id('confirm-button-0')
 buttonRed = driver.find_element_by_id('confirm-button-1')
