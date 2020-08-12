@@ -47,7 +47,7 @@ try:
     if limit <= 0:
         opt = Options()
         opt.headless = True
-        opt.add_argument("--example-flag-" + str(randrange(100))
+        opt.add_argument("--example-flag-" + str(randrange(100)))
         driver = webdriver.Chrome(options=opt)
 
     driver.get("https://live-draft.herokuapp.com/")
