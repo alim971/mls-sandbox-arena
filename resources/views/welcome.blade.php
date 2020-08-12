@@ -272,10 +272,14 @@
         });
 
         $(document).on('click', '#right', function(evt) {
+            evt.preventDefault();
+
             copy(2,1);
         });
 
         $(document).on('click', '#reset', function(evt) {
+            evt.preventDefault();
+
             reset();
         });
 
@@ -655,7 +659,7 @@
                 </div>
             </div>
             <div style="margin-top: 15px">
-                <button style="display: block" class="btn btn-danger" id="reset">Rest</button>
+                <button class="btn btn-danger" id="reset">Reset</button>
                 <button class="btn btn-success" id="submit">Play</button>
             </div>
         </form>
