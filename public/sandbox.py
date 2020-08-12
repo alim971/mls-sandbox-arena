@@ -1,6 +1,7 @@
 import sys
 import json
-from random import random
+from random import randrange
+
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
@@ -46,7 +47,7 @@ try:
     if limit <= 0:
         opt = Options()
         opt.headless = True
-        opt.add_argument("--example-flag-" + str(random(100)))
+        opt.add_argument("--example-flag-" + str(randrange(100))
         driver = webdriver.Chrome(options=opt)
 
     driver.get("https://live-draft.herokuapp.com/")
