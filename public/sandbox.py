@@ -81,11 +81,15 @@ try:
     info = driver.find_element_by_id('match-info-text')
 
 
-    while not 'wins' in info.text or not 'Draw' in info.text:
+    while 'wins' not in info.text and 'Draw' not in info.text:
         sleep(1)
     infoText = info.text
     infoSub = driver.find_element_by_id('match-info-text-sub').text
-    print(infoText + " " + infoSub)
+    links = driver.find_element_by_id('match-links-ul').find_elements_by_tag_name('a')
+    print(infoText + " " + infoSub + '\n')
+    for link in links:
+        if 'Live' not in link.text:
+            print('<a target="_blank" rel="noopener noreferrer"  href="' + link.get_attribute('href') + '">' + link.text + '</a>')
 # except Exception as e:
 #      tb = traceback.format_exc()
 #      print >> sys.stderr, tb
