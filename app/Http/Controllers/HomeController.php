@@ -63,6 +63,7 @@ class HomeController extends Controller
             '18' => 'Enchanter (Ardent)',
             '17' => 'Enchanter (Athenes)',
             '9' => 'Freeze Mage',
+            '15' => 'Lethality',
             '3' => 'Manamune Crit',
             '10' => 'Protector',
             '7' => 'Scaling Mage',

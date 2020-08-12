@@ -35,7 +35,7 @@ while err and limit > 0:
         options.headless = True
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
-        options.add_argument("--example-flag")
+        options.add_argument("--example-flag-" + str(randrange(100)))
         options.add_argument('--disable-dev-shm-usage')
         options.binary_location = GOOGLE_CHROME_PATH
         driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
@@ -81,7 +81,7 @@ try:
     info = driver.find_element_by_id('match-info-text')
 
 
-    while not 'wins' in info.text:
+    while not 'wins' in info.text or not 'Draw' in info.text:
         sleep(1)
     infoText = info.text
     infoSub = driver.find_element_by_id('match-info-text-sub').text
