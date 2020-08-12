@@ -275,6 +275,10 @@
             copy(2,1);
         });
 
+        $(document).on('click', '#reset', function(evt) {
+            reset();
+        });
+
         $(document).on('click', '#submit', function(evt) {
             evt.preventDefault();
             if(!$('#resultDiv').hasClass('collapse')) {
@@ -320,6 +324,22 @@
 
             });
         });
+
+        function reset() {
+            for (var i = 1; i <= 2; i++) {
+                for (var j = 1; j <= 5; j++) {
+                    var nameTo = '#' + i + '_' + j;
+                    var toSelectChamp =  $(nameTo);
+                    var toSelectRune =   $(nameTo + '_rune');
+                    var toSelectItem =   $(nameTo + '_item');
+
+                    toSelectChamp.val(-1);
+                    toSelectRune.val(-1);
+                    toSelectItem.val(-1);
+                }
+            }
+
+        }
 
         function copy(from, to) {
             for (var j = 1; j <= 5; j++) {
@@ -635,6 +655,7 @@
                 </div>
             </div>
             <div style="margin-top: 15px">
+                <button style="display: block" class="btn btn-danger" id="reset">Rest</button>
                 <button class="btn btn-success" id="submit">Play</button>
             </div>
         </form>
