@@ -49,13 +49,37 @@ class HomeController extends Controller
             'PTA' => 'Press the Attack',
             'SA' => 'Summon Aery'
         ];
+
+        $items = [
+            '86' => '50% Crit Bruiser',
+            '5' => 'AD On-Hit',
+            '16' => 'AP Assassin',
+            '6' => 'AP On-Hit',
+            '14' => 'Bruiser (Black Cleaver)',
+            '13' => 'Bruiser (Trinity)',
+            '8' => 'Burst Mage',
+            '1' => 'Crit + Lord Dominiks',
+            '2' => 'Crit + Mortal Reminder',
+            '18' => 'Enchanter (Ardent)',
+            '17' => 'Enchanter (Athenes)',
+            '9' => 'Freeze Mage',
+            '3' => 'Manamune Crit',
+            '10' => 'Protector',
+            '7' => 'Scaling Mage',
+            '12' => 'Tank (Max. HP)',
+            '11' => 'Tank (Resistance)',
+            '4' => 'Trinity Manamune',
+        ];
         $defaultChamp = 'Amumu';
         $defaultRune = 'AS';//'Aftershock';
+        $defaultItem = '12';
         return view('welcome', [
             'champions' => $champions,
             'runes' => $runes,
+            'items' => $items,
             'defaultChampion' => $defaultChamp,
-            'defaultRune' => $defaultRune
+            'defaultRune' => $defaultRune,
+            'defaultItem' => $defaultItem
         ]);
     }
 }

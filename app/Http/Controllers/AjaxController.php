@@ -13,24 +13,23 @@ class AjaxController extends Controller
     public function select() {
         $defaultChamp = \request()->get('defChamp');
         $defaultRune = \request()->get('defRune');//'Aftershock';
+        $defaultItem = \request()->get('defItem');//'Aftershock';
+        $defaultKey = 'oJ1mHBDCY8atKtonudHrnncplYQgX0Bq4H0MISG4psj6xzYFtM4DvU5mhb7o7r9W';
         $data = [];
-        $data += [
-            'own' => \request()->get('own') ?? false,
-        ];
-        if(\request()->get('own')) {
             $data += [
-                'key' => \request()->get('key'),
+                'key' => \request()->get('key') ?? $defaultKey,
             ];
-        }
         for ($i = 1; $i <= 2; $i++) {
             for ($j = 1; $j <= 5; $j++) {
                 $name = ($i - 1) . '-' . $j;
                 $value = $i . '_' . $j;
                 $champ = \request()->get($value);
                 $rune = \request()->get($value . '_rune');
+                $item = \request()->get($value . '_item');
                 $data += [
                     $name => $champ == -1 ? $defaultChamp : $champ,
                     $name . '_rune' => $rune == -1 ? $defaultRune : $rune,
+                    $name . '_item' => $rune == -1 ? $defaultItem : $item,
                 ];
             }
         }

@@ -22,13 +22,7 @@ data = json.loads(x)
 own = data['own']
 
 
-options = Options()
-options.headless = True
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
-options.add_argument("--example-flag")
-options.add_argument('--disable-dev-shm-usage')
-options.binary_location = GOOGLE_CHROME_PATH
+
 # driverLocation = '/usr/local/bin/chromedriver' #if windows
 # driver = webdriver.Chrome(executable_path=driverLocation,options=options)
 # options.add_argument('--example-flag')
@@ -38,6 +32,13 @@ limit = 5
 err = True
 while err and limit > 0:
     try:
+        options = Options()
+        options.headless = True
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument("--example-flag")
+        options.add_argument('--disable-dev-shm-usage')
+        options.binary_location = GOOGLE_CHROME_PATH
         driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
         err = False
     except Exception:
@@ -49,18 +50,15 @@ try:
         opt.headless = True
         opt.add_argument("--example-flag-" + str(random(100)))
         driver = webdriver.Chrome(options=opt)
+
     driver.get("https://live-draft.herokuapp.com/")
     selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
-    key = ""
-    if own:
-        key = data['key']
-        selectOwn.select_by_value('own-players')
-        blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
-        redKey = driver.find_element_by_id('own-players-input-sandbox-red')
-        blueKey.send_keys(key)
-        redKey.send_keys(key)
-    else:
-        selectOwn.select_by_value('default-players')
+    key = data['key']
+    blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
+    redKey = driver.find_element_by_id('own-players-input-sandbox-red')
+    blueKey.send_keys(key)
+    redKey.send_keys(key)
+
     driver.find_element_by_xpath('//button[text()="Sandbox"]').click()
     while not len(driver.find_elements_by_id('announcement-label')) > 0:
         sleep(1)
@@ -72,6 +70,9 @@ try:
 
             rune = Select(driver.find_element_by_id('rune-' + name))
             rune.select_by_value(data[name + '_rune'])
+
+            item = Select(driver.find_element_by_id('item-' + name))
+            item.select_by_value(data[name + '_item'])
 
     buttonBlue = driver.find_element_by_id('confirm-button-0')
     buttonRed = driver.find_element_by_id('confirm-button-1')

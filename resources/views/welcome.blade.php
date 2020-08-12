@@ -11,6 +11,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 
@@ -106,7 +107,7 @@
 
         select {
             height: 40px;
-            width: 49%;
+            width: 32%;
             border-width: 2px;
         }
 
@@ -143,7 +144,9 @@
             margin-right: 15px;
         }
 
-
+        .def select {
+            width: 50%;
+        }
         .bigger {
             font-size: 1.1em;
             font-weight: bold;
@@ -257,7 +260,19 @@
         }
 
         $(document).on('click', '#close', function(evt) {
+            evt.preventDefault();
+
             $('#resultDiv').addClass('collapse');
+        });
+
+        $(document).on('click', '#left', function(evt) {
+            evt.preventDefault();
+
+            copy(1,2);
+        });
+
+        $(document).on('click', '#right', function(evt) {
+            copy(2,1);
         });
 
         $(document).on('click', '#submit', function(evt) {
@@ -305,6 +320,23 @@
 
             });
         });
+
+        function copy(from, to) {
+            for (var j = 1; j <= 5; j++) {
+                var nameFrom = '#' + from + '_' + j;
+                var nameTo = '#' + to + '_' + j;
+                var fromSelectChamp = $(nameFrom);
+                var fromSelectRune = $(nameFrom + '_rune');
+                var fromSelectItem = $(nameFrom + '_item');
+                var toSelectChamp =  $(nameTo);
+                var toSelectRune =   $(nameTo + '_rune');
+                var toSelectItem =   $(nameTo + '_item');
+
+                toSelectChamp.val(fromSelectChamp.val());
+                toSelectRune.val(fromSelectRune.val());
+                toSelectItem.val(fromSelectItem.val());
+            }
+        }
     </script>
 </head>
 <body>
@@ -355,15 +387,36 @@
 {{--                    @endforeach--}}
 {{--                </select>--}}
 {{--            </div>--}}
-            <div style="justify-content: space-between; display: flex;">
+            <div class="def" style="justify-content: space-between; display: flex;">
+                <div>
+                    <label for="defChamp" class="">Default champion when none is selected</label>
+                    <select id="defChamp" name="defChamp" style="margin-bottom: 15px">
+                        @foreach($champions as $champion)
+                            <option value="{{ $champion->name }}" {{ $champion->name == $defaultChampion ? "selected" : ""}}>{{ $champion->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="defRune" class="">Default rune when none is selected</label>
+                    <select id="defRune" name="defRune"  style="margin-bottom: 15px">
+                        @foreach($runes as $key => $rune)
+                            <option value="{{ $key }}" {{ $key == $defaultRune ? "selected" : ""}}>{{ $rune }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label for="defItem" class="">Default item when none is selected</label>
+                    <select id="defItem" name="defItem"  style="margin-bottom: 15px">
+                        @foreach($items as $key => $item)
+                            <option value="{{ $key }}" {{ $key == $defaultItem ? "selected" : ""}}>{{ $item }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div style="justify-content: center; display: flex;">
                 <div>
                     <div>
-                        <label for="defChamp" class="inline-block">Default champion when none is selected</label>
-                        <select id="defChamp" name="defChamp" style="margin-bottom: 15px">
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}" {{ $champion->name == $defaultChampion ? "selected" : ""}}>{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
+
                         <label for="1_1">Top</label>
 
                         <select id="1_1" name="1_1">
@@ -376,6 +429,12 @@
                             <option  selected value="-1"> -- select a rune -- </option>
                             @foreach($runes as $key => $rune)
                                 <option value="{{ $key }}">{{ $rune }}</option>
+                            @endforeach
+                        </select>
+                        <select id="1_1_item" name="1_1_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -393,6 +452,12 @@
                                 <option value="{{ $key }}">{{ $rune }}</option>
                             @endforeach
                         </select>
+                        <select id="1_2_item" name="1_2_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="1_3">Mid</label>
@@ -406,6 +471,12 @@
                             <option  selected value="-1"> -- select a rune -- </option>
                             @foreach($runes as $key => $rune)
                                 <option value="{{ $key }}">{{ $rune }}</option>
+                            @endforeach
+                        </select>
+                        <select id="1_3_item" name="1_3_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -423,6 +494,12 @@
                                 <option value="{{ $key }}">{{ $rune }}</option>
                             @endforeach
                         </select>
+                        <select id="1_4_item" name="1_4_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="1_5">Supp</label>
@@ -438,18 +515,18 @@
                                 <option value="{{ $key }}">{{ $rune }}</option>
                             @endforeach
                         </select>
+                        <select id="1_5_item" name="1_5_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
-
+                    <button class="btn btn-primary" style="margin-top: 15px" id="left"><i class="fa fa-arrow-right"></i> Copy blue</button>
                 </div>
 
                 <div>
                     <div>
-                        <label for="defRune" class="inline-block">Default rune when none is selected</label>
-                        <select id="defRune" name="defRune"  style="margin-bottom: 15px">
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}" {{ $key == $defaultRune ? "selected" : ""}}>{{ $rune }}</option>
-                            @endforeach
-                        </select>
                         <label for="2_1">Top</label>
                         <select id="2_1" name="2_1">
                             <option  selected value="-1"> - select a champion - </option>
@@ -461,6 +538,12 @@
                             <option  selected value="-1"> -- select a rune -- </option>
                             @foreach($runes as $key => $rune)
                                 <option value="{{ $key }}">{{ $rune }}</option>
+                            @endforeach
+                        </select>
+                        <select id="2_1_item" name="2_1_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -478,6 +561,12 @@
                                 <option value="{{ $key }}">{{ $rune }}</option>
                             @endforeach
                         </select>
+                        <select id="2_2_item" name="2_2_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="2_3">Mid</label>
@@ -491,6 +580,12 @@
                             <option  selected value="-1"> -- select a rune -- </option>
                             @foreach($runes as $key => $rune)
                                 <option value="{{ $key }}">{{ $rune }}</option>
+                            @endforeach
+                        </select>
+                        <select id="2_3_item" name="2_3_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -508,6 +603,12 @@
                                 <option value="{{ $key }}">{{ $rune }}</option>
                             @endforeach
                         </select>
+                        <select id="2_4_item" name="2_4_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div>
                         <label for="2_5">Supp</label>
@@ -523,7 +624,14 @@
                                 <option value="{{ $key }}">{{ $rune }}</option>
                             @endforeach
                         </select>
+                        <select id="2_5_item" name="2_5_item">
+                            <option  selected value="-1"> -- select an item -- </option>
+                            @foreach($items as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    <button class="btn btn-danger" style="margin-top: 15px" id="right"><i class="fa fa-arrow-left"></i> Copy red</button>
                 </div>
             </div>
             <div style="margin-top: 15px">
