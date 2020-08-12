@@ -50,7 +50,7 @@ try:
         driver = webdriver.Chrome(options=opt)
 
     driver.get("https://live-draft.herokuapp.com/")
-    selectOwn = Select(driver.find_element_by_id('player-select-sandbox'))
+
     key = data['key']
     blueKey = driver.find_element_by_id('own-players-input-sandbox-blue')
     redKey = driver.find_element_by_id('own-players-input-sandbox-red')
