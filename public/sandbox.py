@@ -70,8 +70,8 @@ try:
             rune = Select(driver.find_element_by_id('rune-' + name))
             rune.select_by_value(data[name + '_rune'])
 
-#             item = Select(driver.find_element_by_id('item-' + name))
-#             item.select_by_value(data[name + '_item'])
+            item = Select(driver.find_element_by_id('item-' + name))
+            item.select_by_value(data[name + '_item'])
 
     buttonBlue = driver.find_element_by_id('confirm-button-0')
     buttonRed = driver.find_element_by_id('confirm-button-1')
