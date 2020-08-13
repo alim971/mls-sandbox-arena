@@ -247,8 +247,11 @@
         $(document).on('change', '#own', function() {
             if($(this).is(':checked')) {
                 $('#keyDiv').removeClass('collapse')
+                $('#key').prop("disabled",false);
             } else {
                 $('#keyDiv').addClass('collapse')
+                $('#key').prop("disabled",true);
+
             }
         });
 
