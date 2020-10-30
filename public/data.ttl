@@ -1,0 +1,125 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix s: <http://nosql.opendata.cz/sherna/> .
+@prefix i: <http://nosql.opendata.cz/sherna/terms#> .
+
+
+s:student1
+    rdf:type i:Student ;
+    i:number "1" ;
+    i:name [ i:first "Vaclav" ; i:last "Bruska" ] ;
+    i:email "brusva@sh.cz" .
+s:student2
+    rdf:type i:Student ;
+    i:number "2" ;
+    i:name [ i:first "Tomas" ; i:last "Kollar" ] ;
+    i:email "kollt@sh.cz" .
+s:student3
+    rdf:type i:Student ;
+    i:number "3" ;
+    i:name [ i:first "Jakub" ; i:last "Teter" ] ;
+    i:email "teter@sh.cz" .
+s:student4
+    rdf:type i:Student ;
+    i:number "3" ;
+    i:name [ i:first "Michal" ; i:last "Straka" ] ;
+    i:email "strakmi@sh.cz" .
+
+
+s:student1
+    i:enroll [ i:course s:course1 ; i:semester s:semester201 ] .
+
+s:course4
+    rdf:type i:Course ;
+    i:title "PS Tournament" ;
+    i:code "TRPS" ;
+    i:prerequisity s:course1 .
+s:course3
+    rdf:type i:Course ;
+    i:title "VR Advanced" ;
+    i:code "TRVR" ;
+    i:prerequisity s:course3 .
+s:course2
+    rdf:type i:Course ;
+    i:title "VR Training" ;
+    i:code "TVR" ;
+    i:prerequisity s:course1 .
+s:course1
+    rdf:type i:Course ;
+    i:title "Mass registration" ;
+    i:code "REG" .
+
+
+s:semester201
+    i:year "2020/21" ;
+    i:period "winter" .
+s:semester202
+    i:year "2020/21" ;
+    i:period "summer" .
+
+
+s:instructor1
+    rdf:type i:Instructor ;
+    i:name [ i:first "Irena" ; i:last "Holubova" ] .
+s:instructor2
+    rdf:type i:Instructor ;
+    i:name [ i:first "Martin" ; i:last "Necasky" ] .
+s:instructor3
+    rdf:type i:Instructor ;
+    i:name [ i:first "Jan" ; i:last "Perina" ] .
+
+
+s:instructor1
+    i:teach [
+        i:course s:course1 ;
+        i:semester s:semester201 ;
+        i:day "30/09/2020" ;
+        i:time "17:00" ;
+        i:place s:roomS1 ;
+        i:length "90" ;
+    ] .
+s:instructor1
+    i:teach [
+        i:course s:course2 ;
+        i:semester s:semester201 ;
+        i:day "30/09/2020" ;
+        i:time "19:00" ;
+        i:place s:roomS1 ;
+        i:length "90" ;
+    ] .
+s:instructor2
+    i:teach [
+        i:course s:course4 ;
+        i:semester s:semester201 ;
+        i:day "15/11/2020" ;
+        i:time "12:20" ;
+        i:place s:roomS2 ;
+        i:length "180" ;
+    ] .
+s:instructor2
+    i:teach [
+        i:course s:course1 ;
+        i:semester s:semester201 ;
+        i:day "30/10/2020" ;
+        i:time "9:00" ;
+        i:place s:roomS3 ;
+        i:length "90" ;
+    ] .
+
+
+s:roomS3
+    i:number "347" ;
+    i:building s:building6 .
+s:roomS2
+    i:number "447" ;
+    i:building s:building6 .
+s:roomS1
+    i:number "347" ;
+    i:building s:building4 .
+
+
+s:building4
+    i:address [ i:street "Chaloupeckeho 11" ; i:city "Prague" ];
+    i:name "Blok 4".
+s:building6
+    i:address [ i:street "Chaloupeckeho 9" ; i:city "Prague" ];
+    i:name "Blok 6".
