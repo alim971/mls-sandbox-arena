@@ -27,7 +27,7 @@
         /*}*/
         .white {
             background-color: rgba(255, 255, 255, 0.88);
-
+            font-weight: 200;
         }
 
         select.white {
@@ -114,6 +114,7 @@
         input, select:not(.white) {
             color: black;
             background: #d2dbe0;
+            font-weight: 700;
         }
 
         input, select {
@@ -244,14 +245,6 @@
             // }
         });
 
-        $(document).on('change', '#own', function() {
-            if($(this).is(':checked')) {
-                $('#keyDiv').removeClass('collapse')
-            } else {
-                $('#keyDiv').addClass('collapse')
-            }
-        });
-
         function capitalFirst(string)
         {
             if(string != null) {
@@ -265,23 +258,13 @@
             $('#resultDiv').addClass('collapse');
         });
 
-        $(document).on('click', '#left', function(evt) {
-            evt.preventDefault();
-
-            copy(1,2);
-        });
-
-        $(document).on('click', '#right', function(evt) {
-            copy(2,1);
-        });
-
         $(document).on('click', '#submit', function(evt) {
             evt.preventDefault();
             if(!$('#resultDiv').hasClass('collapse')) {
                 $('#resultDiv').addClass('collapse');
             }
             var formData = new FormData(document.querySelector('form'));
-            $('#title').html("Simulating");
+            $('#title').html("Calculating");
 
             $.ajaxSetup({
                 headers: {
@@ -298,11 +281,26 @@
             }).success(function (data) {
                 $('#title').html("MLS - Sandbox Arena");
                 $('#resultDiv').removeClass('alert-danger');
-                if(!$('#resultDiv').hasClass('alert-success')) {
-                    $('#resultDiv').addClass('alert-success');
-                }
-                $('#result').html(data['result']);
-                $('#resultDiv').removeClass('collapse');
+                // if(!$('#resultDiv').hasClass('alert-success')) {
+                //     $('#resultDiv').addClass('alert-success');
+                // }
+                // $('#result').html(data['result']);
+                // $('#resultDiv').removeClass('collapse');
+                $('#games').val(data['games']);
+                $('#placement').val(data['placement']);
+                $('#score').val(data['score']);
+                $('#kda').val(data['kda']);
+                $('#dmg').val(data['dmg']);
+                $('#dmgPer').val(data['dmgPer']);
+                $('#aces').val(data['aces']);
+                $('#worst').val(data['worst']);
+                $('#team_score').val(data['team_score']);
+                $('#team_kda').val(data['team_kda']);
+                $('#team_dmg').val(data['team_dmg']);
+                $('#worst_score').val(data['worst_score']);
+                $('#worst_kda').val(data['worst_kda']);
+                $('#worst_dmg').val(data['worst_dmg']);
+                $('#worst_dmgPer').val(data['worst_dmgPer']);
 
             }).error(function (data) {
                 $('#resultDiv').removeClass('alert-success');
@@ -316,28 +314,11 @@
 
             });
         });
-
-        function copy(from, to) {
-            for (var j = 1; j <= 5; j++) {
-                var nameFrom = '#' + from + '_' + j;
-                var nameTo = '#' + to + '_' + j;
-                var fromSelectChamp = $(nameFrom);
-                var fromSelectRune = $(nameFrom + '_rune');
-                var fromSelectItem = $(nameFrom + '_item');
-                var toSelectChamp =  $(nameTo);
-                var toSelectRune =   $(nameTo + '_rune');
-                var toSelectItem =   $(nameTo + '_item');
-
-                toSelectChamp.val(fromSelectChamp.val());
-                toSelectRune.val(fromSelectRune.val());
-                toSelectItem.val(fromSelectItem.val());
-            }
-        }
     </script>
 </head>
 <body>
-<div class="flex-center position-ref full-height">
-    <div class="content bigger scroll-container">
+<div class="flex-center position-ref full-height" >
+    <div class="content bigger scroll-container" style="width: 75%">
         @include('flash::message')
 
         <div id="title" class="title m-b-md">
@@ -353,285 +334,100 @@
         </div>
 
         <div>
-            <label for="myForm">Select champion(s) and runes you want to test. Empty roles will be autofilled with same champions:</label>
+            <label for="myForm">Select your server and enterr your username</label>
         </div>
         <form method="post">
             <div style="float: right">
                 <button style="float: right" type="button" class="btn btn-white mode" id="dark">White mode</button>
 
             </div>
-            <div class="bigger" style="margin-left: 120px; margin-bottom: 25px; margin-top: 25px">
-                <label for="own">Use own players?</label>
-                <input type="checkbox" class="js-switch" id="own" name="own">
+            <div id="keyDiv">
+                <label for="key">Server</label>
+                <select id="server" name="server"  style="margin-bottom: 15px">
+                    @foreach($servers as $key => $server)
+                        <option value="{{ $key }}" {{ $key == $defaultServer ? "selected" : ""}}>{{ $server }}</option>
+                    @endforeach
+                </select>
+                <div>
+                <label for="username">Username</label>
+                <input type="text" required style="width: 60%; margin-bottom: 25px" name="username" placeholder="username" id="username">
+                </div>
+                <div style="margin: 15px 0 25px 0">
+                    <button class="btn btn-success" id="submit">Load</button>
+                </div>
             </div>
-            <div class="collapse" id="keyDiv">
-                <label for="key">Player key from MLS</label>
-                <input type="text" style="width: 80%; margin-bottom: 25px" name="key" placeholder="Copy here your key from LiveDraft page" id="key">
+            <div class="flex-center" style="margin-bottom: 30px">
+                <div>
+                    <label for="games">Number of lost games</label>
+                    <input type="number" disabled readonly name="games" id="games">
+                </div>
+                <div>
+                    <label for="aces">Number of times you were the ACE</label>
+                    <input type="number" disabled maxlength="10" readonly name="aces" id="aces">
+                </div>
+                <div>
+                    <label for="worst">Number of times you were worst</label>
+                    <input type="number" disabled maxlength="10" readonly name="worst" id="worst">
+                </div>
+                <div>
+                    <label for="placement">Average Placement</label>
+                    <input type="number" disabled maxlength="10" readonly name="placement" id="placement">
+                </div>
             </div>
-{{--            <div>--}}
-
-{{--                <label for="defChamp" class="inline-block">Default champion</label>--}}
-{{--                <select id="defChamp" name="defChamp">--}}
-{{--                    @foreach($champions as $champion)--}}
-{{--                        <option value="{{ $champion->name }}" {{ $champion->name == $defaultChampion ? "selected" : ""}}>{{ $champion->name }}</option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--                <label for="defRune" class="inline-block">Default rune</label>--}}
-{{--                <select id="defRune" name="defRune">--}}
-{{--                    @foreach($runes as $key => $rune)--}}
-{{--                        <option value="{{ $key }}" {{ $key == $defaultRune ? "selected" : ""}}>{{ $rune }}</option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
             <div class="def" style="justify-content: space-between; display: flex;">
                 <div>
-                    <label for="defChamp" class="">Default champion when none is selected</label>
-                    <select id="defChamp" name="defChamp" style="margin-bottom: 15px">
-                        @foreach($champions as $champion)
-                            <option value="{{ $champion->name }}" {{ $champion->name == $defaultChampion ? "selected" : ""}}>{{ $champion->name }}</option>
-                        @endforeach
-                    </select>
+                    <label>Your average stats</label>
+                    <div>
+                        <label for="score">Score</label>
+                        <input type="number" disabled maxlength="10" readonly name="score" id="score">
+                    </div>
+                    <div>
+                        <label for="kda">KDA</label>
+                        <input type="number" disabled maxlength="10" readonly name="kda" id="kda">
+                    </div>
+                    <div>
+                        <label for="dmg">Damage</label>
+                        <input type="number" disabled maxlength="10" readonly name="dmg" id="dmg">
+                    </div>
+                    <div>
+                        <label for="dmgPer">Damage Percentage</label>
+                        <input type="number" disabled maxlength="10" readonly name="dmgPer" id="dmgPer">
+                    </div>
                 </div>
                 <div>
-                    <label for="defRune" class="">Default rune when none is selected</label>
-                    <select id="defRune" name="defRune"  style="margin-bottom: 15px">
-                        @foreach($runes as $key => $rune)
-                            <option value="{{ $key }}" {{ $key == $defaultRune ? "selected" : ""}}>{{ $rune }}</option>
-                        @endforeach
-                    </select>
+                    <label>Team average stats</label>
+                    <div>
+                        <label for="team_score">Score</label>
+                        <input type="number" disabled maxlength="10" readonly name="team_score" id="team_score">
+                    </div>
+                    <div>
+                        <label for="team_kda">KDA</label>
+                        <input type="number" disabled maxlength="10" readonly name="team_kda" id="team_kda">
+                    </div>
+                    <div>
+                        <label for="team_dmg">Damage</label>
+                        <input type="number" disabled maxlength="10" readonly name="team_dmg" id="team_dmg">
+                    </div>
                 </div>
                 <div>
-                    <label for="defItem" class="">Default item when none is selected</label>
-                    <select id="defItem" name="defItem"  style="margin-bottom: 15px">
-                        @foreach($items as $key => $item)
-                            <option value="{{ $key }}" {{ $key == $defaultItem ? "selected" : ""}}>{{ $item }}</option>
-                        @endforeach
-                    </select>
+                    <label>Worst player average stats</label>
+                    <div>
+                        <label for="worst_score">Score</label>
+                        <input type="number" disabled maxlength="10" readonly name="worst_score" id="worst_score">
+                    </div>
+                    <div>
+                        <label for="worst_kda">KDA</label>
+                        <input type="number" disabled maxlength="10" readonly name="worst_kda" id="worst_kda">
+                    </div>
+                    <div>
+                        <label for="worst_dmg">Damage</label>
+                        <input type="number" disabled maxlength="10" readonly name="worst_dmg" id="worst_dmg">
+                    </div>
+                    <div>
+                        <label for="worst_dmgPer">Damage Percentage</label>
+                        <input type="number" disabled maxlength="10" readonly name="worst_dmgPer" id="worst_dmgPer">
+                    </div>
                 </div>
-            </div>
-            <div style="justify-content: center; display: flex;">
-                <div>
-                    <div>
-
-                        <label for="1_1">Top</label>
-
-                        <select id="1_1" name="1_1">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_1_rune" name="1_1_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_1_item" name="1_1_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="1_2">Jg</label>
-                        <select id="1_2" name="1_2">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_2_rune" name="1_2_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_2_item" name="1_2_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="1_3">Mid</label>
-                        <select id="1_3" name="1_3">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_3_rune" name="1_3_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_3_item" name="1_3_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="1_4">Bot</label>
-                        <select id="1_4" name="1_4" name="1_4_rune">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_4_rune" name="1_4_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_4_item" name="1_4_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="1_5">Supp</label>
-                        <select id="1_5" name="1_5">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_5_rune" name="1_5_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="1_5_item" name="1_5_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" style="margin-top: 15px" id="left"><i class="fa fa-arrow-right"></i> Copy blue</button>
-                </div>
-
-                <div>
-                    <div>
-                        <label for="2_1">Top</label>
-                        <select id="2_1" name="2_1">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_1_rune" name="2_1_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_1_item" name="2_1_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="2_2">Jg</label>
-                        <select id="2_2" name="2_2">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_2_rune" name="2_2_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_2_item" name="2_2_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="2_3">Mid</label>
-                        <select id="2_3" name="2_3">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_3_rune" name="2_3_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_3_item" name="2_3_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="2_4">Bot</label>
-                        <select id="2_4" name="2_4" >
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_4_rune" name="2_4_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_4_item" name="2_4_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="2_5">Supp</label>
-                        <select id="2_5" name="2_5">
-                            <option  selected value="-1"> - select a champion - </option>
-                            @foreach($champions as $champion)
-                                <option value="{{ $champion->name }}">{{ $champion->name }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_5_rune" name="2_5_rune">
-                            <option  selected value="-1"> -- select a rune -- </option>
-                            @foreach($runes as $key => $rune)
-                                <option value="{{ $key }}">{{ $rune }}</option>
-                            @endforeach
-                        </select>
-                        <select id="2_5_item" name="2_5_item">
-                            <option  selected value="-1"> -- select an item -- </option>
-                            @foreach($items as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <button class="btn btn-danger" style="margin-top: 15px" id="right"><i class="fa fa-arrow-left"></i> Copy red</button>
-                </div>
-            </div>
-            <div style="margin-top: 15px">
-                <button class="btn btn-success" id="submit">Play</button>
             </div>
         </form>
 
