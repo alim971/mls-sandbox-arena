@@ -184,8 +184,8 @@ try:
                     worstScoreTmp += score
                     worstNumber += 1
                     worstUser = name
-            ownDmgPerc += ownDmg / (teamDmg - teamDmgTmp)
-            worstDmgPerc += worstDmgTmp / (teamDmg - teamDmgTmp)
+            ownDmgPerc += (ownDmgTmp / (teamDmg - teamDmgTmp)) * 100
+            worstDmgPerc += (worstDmgTmp / (teamDmg - teamDmgTmp)) * 100
             worstScore += worstScoreTmp
             worstKda += worstKdaTmp
             worstDmg += worstDmgTmp
@@ -205,7 +205,7 @@ try:
     print(bestTimes)
     print(worstTimes)
 
-    print(round(teamScore / number, 2))
+    print(round(teamScore / (5 * number), 2))
     print(round(teamKda / number, 2))
     print(round(teamDmg / number, 2))
 
