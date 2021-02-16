@@ -11,28 +11,19 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 class AjaxController extends Controller
 {
     public function select() {
-        $defaultChamp = \request()->get('defChamp');
-        $defaultRune = \request()->get('defRune');//'Aftershock';
-        $defaultItem = \request()->get('defItem');//'Aftershock';
-        $defaultKey = 'oJ1mHBDCY8atKtonudHrnncplYQgX0Bq4H0MISG4psj6xzYFtM4DvU5mhb7o7r9W';
-        $data = [];
-            $data += [
-                'key' => \request()->get('key') ?? $defaultKey,
+        $server = \request()->get('server');
+        $username = \request()->get('username');//'Aftershock';
+        if($username == null) {
+            $result = [
+//                'result' => "Error while trying to simulate",
+                'result' => 'Username not provided!'
             ];
-        for ($i = 1; $i <= 2; $i++) {
-            for ($j = 1; $j <= 5; $j++) {
-                $name = ($i - 1) . '-' . $j;
-                $value = $i . '_' . $j;
-                $champ = \request()->get($value);
-                $rune = \request()->get($value . '_rune');
-                $item = \request()->get($value . '_item');
-                $data += [
-                    $name => $champ == -1 ? $defaultChamp : $champ,
-                    $name . '_rune' => $rune == -1 ? $defaultRune : $rune,
-                    $name . '_item' => $rune == -1 ? $defaultItem : $item,
-                ];
-            }
+            return Response::json($result)->setStatusCode(404);
         }
+        $data = [
+                'server' => $server,
+                'username' => $username
+            ];
         $json = json_encode($data);
         $path = public_path() . '/sandbox.py';
 //        $process = new Process("python3 {pa()} . '/sandbox.py {$json}");
@@ -51,8 +42,23 @@ class AjaxController extends Controller
         }
 
         $winner = $process->getOutput();
+        $parsed = explode("\n", $winner);
         $result += [
-            'result' => $winner
+            'games' => $parsed[0],
+            'placement' => $parsed[1],
+            'score' => $parsed[2],
+            'kda' => $parsed[3],
+            'dmg' => $parsed[4],
+            'dmgPer' => $parsed[5],
+            'aces' => $parsed[6],
+            'worst' => $parsed[7],
+            'team_score' => $parsed[8],
+            'team_kda' => $parsed[9],
+            'team_dmg' => $parsed[10],
+            'worst_score' => $parsed[11],
+            'worst_kda' => $parsed[12],
+            'worst_dmg' => $parsed[13],
+            'worst_dmgPer' => $parsed[14]
         ];
 //        flash($winner)->success()->important();
         return Response::json($result);
